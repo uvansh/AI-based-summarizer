@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+{% block title %}Cook your notes{% endblock %}
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+{% block content %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="d-flex justify-content-center row align-items-center" style="margin: 50px;">
+        <div class="card center-block  "
+            style="width: 25rem; text-align: center; background-color: cadetblue; color: white;">
+            <div class="card-body m-4">
+                <h1 style="padding: 10px; font-family: Pacifico;">Cook your notes</h1>
+                <h3 class="text-center">Welcome, {{ email.split('@')[0] }}</h3>
+                <a href="/logout" class="btn btn-dark mt-2">Logout</a>
+                <form action="/summarize" method="post">
+                    <div class="form-row">
+                        <input type="text" class="form-control m-2" name="url" placeholder="Enter URL" />
+                        <textarea class="form-control m-2" name="manual_text" placeholder="Or enter text here" rows="5"></textarea>
+                        <div class="col m-2" style="width: 100px;">
+                            <input type="text" class="form-control" placeholder="Start Index" id="start" name="start"
+                                required>
+                        </div>
+                        <div class="col m-2" style="width: 100px;">
+                            <input type="text" class="form-control" placeholder="End Index" id="end" name="end" required>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary m-2" type="submit">Summarize</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
